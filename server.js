@@ -25,7 +25,7 @@ db.once("open", () => {
 // Routes
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to InstaGram Clone App API created By senthiltechspot",
+    message: "Welcome to CRM Backend App API created By SenthilTechSpot",
   });
 });
 require("./Routes/userRoutes")(app);
