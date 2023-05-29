@@ -61,9 +61,20 @@ exports.signIn = async (req, res) => {
     return res.status(401).send({ message: "Invalid password!" });
   }
 
-  var token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
-    expiresIn: 86400,
-  });
+  var token = jwt.sign(
+    {
+      id: user._id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      userType: user.userTypes,
+      userStatus: user.userStatus,
+    },
+    process.env.TOKEN_SECRET,
+    {
+      expiresIn: 86400,
+    }
+  );
 
   res.status(200).send({
     name: user.name,

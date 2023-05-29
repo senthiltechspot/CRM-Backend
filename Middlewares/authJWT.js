@@ -16,8 +16,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(403).send({ message: "Invalid JWT token" });
     }
-
-    req.username = payload.id;
+    req.username = payload.username;
     next();
   });
 };
