@@ -83,7 +83,7 @@ exports.updateTicketById = async (req, res) => {
   const username = req.username;
 
   const savedTicket = await Ticket.findOne({ _id: ticketId });
-  const savedUser = await Ticket.findOne({ username: username });
+  const savedUser = await User.findOne({ username: username });
 
   if (
     savedUser.userTypes == userTypes.admin ||
