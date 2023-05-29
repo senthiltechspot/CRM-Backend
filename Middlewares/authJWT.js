@@ -17,13 +17,13 @@ const verifyToken = (req, res, next) => {
       return res.status(403).send({ message: "Invalid JWT token" });
     }
 
-    req.userId = payload.id;
+    req.username = payload.id;
     next();
   });
 };
 
 const isAdmin = async (req, res, next) => {
-  const user = await User.findOne({ userId: req.userId });
+  const user = await User.findOne({ username: req.username });
 
   if (user && user.userTypes === userTypes.admin) {
     next();
@@ -37,7 +37,7 @@ const isAdmin = async (req, res, next) => {
 const isAdminOrOwnUser = async (req, res, next) => {
   //this will run only for routes which gives id in params
 
-  const user = await User.findOne({ userId: req.userId });
+  const user = await User.findOne({ username: req.username });
 
   if (
     (user && user.userTypes === userTypes.admin) ||

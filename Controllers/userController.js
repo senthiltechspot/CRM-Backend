@@ -1,11 +1,11 @@
 const User = require("../Models/user");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { userStatus } = require("../utils/constants");
 
 exports.createUser = async (req, res) => {
   const user = await User.create({
     name: req.body.name,
-    userId: req.body.userId,
+    username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 5),
   });
@@ -33,7 +33,7 @@ exports.getUserById = async (req, res) => {
     const user = await User.find({ _id: id });
 
     if (!user || !user.length) {
-      return res.status(400).send({ message: "Invalid userid passed" });
+      return res.status(400).send({ message: "Invalid username passed" });
     }
 
     return res.status(200).send(user);

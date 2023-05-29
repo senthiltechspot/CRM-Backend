@@ -6,16 +6,16 @@ const verifySignUpRequest = async (req, res, next) => {
     return res.status(400).send({ message: "Failed! UserName doesn't exists" });
   }
 
-  if (!req.body.userId) {
-    return res.status(400).send({ message: "Failed! userId doesn't exists" });
+  if (!req.body.username) {
+    return res.status(400).send({ message: "Failed! username doesn't exists" });
   }
 
-  //validate userId
+  //validate username
 
-  var user = await User.findOne({ userId: req.body.userId });
+  var user = await User.findOne({ username: req.body.username });
 
   if (user != null) {
-    return res.status(400).send({ message: "Failed! UserId already exists" });
+    return res.status(400).send({ message: "Failed! Username already exists" });
   }
 
   if (!req.body.email) {

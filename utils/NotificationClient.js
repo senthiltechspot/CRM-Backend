@@ -15,8 +15,8 @@ const sendEmail = (emailsIds, subject, html, text) => {
   let mailTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "senthiltechspot@gmail.com",
-      pass: "oyvgpcuzoinypqpe",
+      user: process.env.EMAIL_ID,
+      pass: process.env.EMAIL_PASSCODE,
     },
   });
 

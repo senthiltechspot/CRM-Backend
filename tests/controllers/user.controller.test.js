@@ -8,7 +8,7 @@ const userTestPayoad = {
     userStatus:"APPROVED",
     userTypes:"CUSTOMER",
     email:"utmalik@amazon.com",
-    userId:"utmalik"
+    username:"utmalik"
 }
 
 describe("Find all users",()=>{
@@ -28,7 +28,7 @@ describe("Find all users",()=>{
             expect.arrayContaining([
                 expect.objectContaining({
                     email:"utmalik@amazon.com",
-                    userId:"utmalik"
+                    username:"utmalik"
                 })
             ])
         )
@@ -47,7 +47,7 @@ const userTestPayoadForUpdate = {
     userStatus:"PENDING",
     userTypes:"CUSTOMER",
     email:"utmalik@amazon.com",
-    userId:"utmalik",
+    username:"utmalik",
     save:jest.fn()
 }
 
@@ -58,7 +58,7 @@ const userTestPayoadForUpdatedValue = {
     userStatus:"APPROVED",
     userTypes:"CUSTOMER",
     email:"utmalik@amazon.com",
-    userId:"utmalik",
+    username:"utmalik",
     save:jest.fn()
 }
 

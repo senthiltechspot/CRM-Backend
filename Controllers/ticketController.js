@@ -8,7 +8,7 @@ exports.createTicket = async (req, res) => {
     ticketPriority: req.body.ticketPriority,
     description: req.body.description,
     status: req.body.status,
-    requestor: req.userId,
+    requestor: req.username,
   };
 
   //find a random enginner in approved state and assign this ticket to that engineer
@@ -23,7 +23,7 @@ exports.createTicket = async (req, res) => {
       .send({ message: "Currently No Engineers are Available" });
   }
 
-  ticketObj.assignee = engineer.userId;
+  ticketObj.assignee = engineer.username;
 
   try {
     const ticket = await Ticket.create(ticketObj);
@@ -39,17 +39,17 @@ exports.createTicket = async (req, res) => {
 //engineer: All tickets assigned to him or created by him
 
 exports.geAllTickets = async (req, res) => {
-  const userId = req.userId;
+  const username = req.username;
 
-  const savedUser = await User.findOne({ userId: userId });
+  const savedUser = await User.findOne({ username: username });
   const userType = savedUser.userTypes;
 
   var queryObject = {};
 
   if (userType == userTypes.customer) {
-    queryObject = { requestor: userId };
+    queryObject = { requestor: username };
   } else if (userType == userTypes.engineer) {
-    queryObject = { $or: [{ assignee: userId }, { requestor: userId }] };
+    queryObject = { $or: [{ assignee: username }, { requestor: username }] };
   }
 
   const tickets = await Ticket.find(queryObject);
@@ -57,9 +57,9 @@ exports.geAllTickets = async (req, res) => {
 };
 
 exports.getTicketById = async (req, res) => {
-  const userId = req.userId;
+  const username = req.username;
 
-  const savedUser = await User.findOne({ userId: userId });
+  const savedUser = await User.findOne({ username: username });
   const userType = savedUser.userTypes;
 
   var queryObject = { id: req.params.id };
@@ -69,7 +69,7 @@ exports.getTicketById = async (req, res) => {
     return res.status(200).send(savedTicket);
   }
 
-  if (savedTicket.requestor === userId || savedTicket.assignee === userId) {
+  if (savedTicket.requestor === username || savedTicket.assignee === username) {
     return res.status(200).send(savedTicket);
   }
 
@@ -80,15 +80,15 @@ exports.getTicketById = async (req, res) => {
 
 exports.updateTicketById = async (req, res) => {
   const ticketId = req.params.id;
-  const userId = req.userId;
+  const username = req.username;
 
   const savedTicket = await Ticket.findOne({ _id: ticketId });
-  const savedUser = await Ticket.findOne({ userId: userId });
+  const savedUser = await Ticket.findOne({ username: username });
 
   if (
     savedUser.userTypes == userTypes.admin ||
-    savedTicket.requestor == userId ||
-    savedTicket.assignee == userId
+    savedTicket.requestor == username ||
+    savedTicket.assignee == username
   ) {
     savedTicket.title = req.body.title ? req.body.title : savedTicket.title;
     savedTicket.description = req.body.description

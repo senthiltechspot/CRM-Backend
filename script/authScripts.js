@@ -14,7 +14,7 @@ const userRegistration = (user)=>{
         You have registered successfully  with email ${user.email}
         <br/>
 
-        Your userId required at the time of login will be ${user.userId}
+        Your username required at the time of login will be ${user.username}
         <br/>
         <br/>
 

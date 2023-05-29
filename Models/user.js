@@ -1,38 +1,38 @@
 const mongoose = require("mongoose");
-const { userTypes, userStatus } = require("../utils/constants");
 
-const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    userId:{
-        type:String,
-        required:true
+    username: {
+      type: String,
+      required: true,
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+      type: String,
+      required: true,
     },
-    createdAt:{
-        type:Date,
-        immutable:true,
-        default:()=>Date.now()
+    userTypes: {
+      type: String,
+      required: true,
+      enum: ["ADMIN", "CUSTOMER", "ENGINEER"],
+      default: "CUSTOMER",
     },
-    userTypes:{
-        type:String,
-        required:true,
-        default:userTypes.customer
+    userStatus: {
+      type: String,
+      required: true,
     },
-    userStatus:{
-        type:String,
-        required:true,
-        default:userStatus.approved
-    }
-})
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", UserSchema);
